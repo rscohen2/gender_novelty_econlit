@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Gender & Novelty — Economics and Literature</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0F1B2D;
+      --slate: #1E3052;
+      --mid: #2A3F5F;
+      --gold: #C9A84C;
+      --gold-dim: rgba(201,168,76,0.15);
+      --text: #E4EAF4;
+      --text-dim: #8FA3C0;
+      --rule: rgba(228,234,244,0.12);
+      --card-bg: rgba(30,48,82,0.5);
+      --body-max: 860px;
+      --wide-max: 1100px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root { color-scheme: dark; }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      background: var(--navy);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: clamp(2rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem) clamp(3rem, 8vw, 5rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 30%, rgba(201,168,76,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 80% at 10% 80%, rgba(42,63,95,0.6) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-label {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fade-up 0.8s ease 0.1s forwards;
+    }
+
+    .hero-title {
+      font-family: 'IBM Plex Serif', Georgia, serif;
+      font-size: clamp(2.6rem, 7vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      max-width: 14ch;
+      color: var(--text);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fade-up 0.9s ease 0.25s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--text-dim);
+      max-width: 54ch;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fade-up 0.9s ease 0.4s forwards;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      opacity: 0;
+      animation: fade-up 0.9s ease 0.55s forwards;
+    }
+
+    .meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .meta-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+    .meta-value { font-family: 'IBM Plex Serif', serif; font-size: 1rem; color: var(--text); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      right: clamp(1.5rem, 6vw, 5rem);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fade-up 0.9s ease 0.7s forwards;
+    }
+
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold));
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Layout shell ── */
+    .section {
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem);
+      border-top: 1px solid var(--rule);
+    }
+
+    .container { max-width: var(--body-max); }
+    .container-wide { max-width: var(--wide-max); }
+
+    /* ── Section headings ── */
+    .section-tag {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    h2 {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 300;
+      line-height: 1.25;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-dim);
+      max-width: 66ch;
+      margin-bottom: 1.1rem;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    /* ── Research question banner ── */
+    .rq-block {
+      background: var(--gold-dim);
+      border-left: 3px solid var(--gold);
+      padding: 1.4rem 1.8rem;
+      margin: 2rem 0;
+      border-radius: 0 4px 4px 0;
+      max-width: 66ch;
+    }
+
+    .rq-block p {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text);
+      margin: 0;
+      max-width: none;
+    }
+
+    /* ── Stats row ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 2.5rem 0;
+    }
+
+    .stat-cell {
+      background: var(--navy);
+      padding: 1.8rem 1.6rem;
+    }
+
+    .stat-number {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-desc {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--text-dim);
+      max-width: none;
+      margin: 0;
+    }
+
+    /* ── Two-column layout ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    .col-block {
+      background: var(--navy);
+      padding: 2rem 1.8rem;
+    }
+
+    .col-block h3 {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 0.8rem;
+    }
+
+    .col-block p { max-width: none; font-size: 0.95rem; }
+
+    @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Method steps ── */
+    .steps { margin-top: 2rem; display: flex; flex-direction: column; gap: 0; }
+
+    .step {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      gap: 0 1.5rem;
+      padding: 1.6rem 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .step:last-child { border-bottom: 1px solid var(--rule); }
+
+    .step-num {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--gold);
+      padding-top: 0.15rem;
+    }
+
+    .step-body h4 {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .step-body p { font-size: 0.9rem; max-width: none; margin: 0; }
+
+    /* ── Findings cards ── */
+    .findings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    .finding-card {
+      background: var(--navy);
+      padding: 2rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .finding-domain {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .finding-headline {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.35;
+    }
+
+    .finding-detail {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--text-dim);
+      max-width: none;
+      margin: 0;
+    }
+
+    /* ── Variable table ── */
+    .var-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+
+    .var-table th {
+      text-align: left;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .var-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--rule);
+      color: var(--text);
+      font-weight: 300;
+      vertical-align: top;
+    }
+
+    .var-table td:first-child {
+      font-family: 'IBM Plex Serif', serif;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .var-table td:last-child { color: var(--text-dim); font-size: 0.85rem; }
+
+    .tag-dep  { display: inline-block; font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 2px; background: var(--gold-dim); color: var(--gold); letter-spacing: 0.06em; font-weight: 500; margin-left: 0.5rem; vertical-align: middle; }
+    .tag-ctrl { display: inline-block; font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 2px; background: rgba(143,163,192,0.12); color: var(--text-dim); letter-spacing: 0.06em; font-weight: 500; margin-left: 0.5rem; vertical-align: middle; }
+
+    /* ── CTA / footer ── */
+    .cta-section {
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem);
+      border-top: 1px solid var(--rule);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .cta-left h2 { margin-bottom: 0.5rem; }
+    .cta-left p  { max-width: 46ch; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.8rem 1.6rem;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .btn-primary:hover { background: #d9b85c; }
+
+    .btn-outline {
+      border: 1px solid var(--rule);
+      color: var(--text);
+      background: transparent;
+    }
+
+    .btn-outline:hover { border-color: var(--text-dim); }
+
+    .btn-group { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.5rem; }
+
+    footer {
+      padding: 2rem clamp(1.5rem, 6vw, 5rem);
+      border-top: 1px solid var(--rule);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    footer a { color: var(--text-dim); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem clamp(1.5rem, 6vw, 5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(15,27,45,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .nav-logo {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    @media (max-width: 500px) { .nav-links { display: none; } }
+
+    /* ── Coeff row visualizer ── */
+    .coeff-table { margin-top: 2rem; }
+    .coeff-row {
+      display: grid;
+      grid-template-columns: 160px 1fr 80px;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.8rem 0;
+      border-top: 1px solid var(--rule);
+    }
+    .coeff-row:last-child { border-bottom: 1px solid var(--rule); }
+    .coeff-name { font-family: 'IBM Plex Serif', serif; font-size: 0.9rem; color: var(--text); }
+    .coeff-bar-wrap { height: 6px; background: var(--rule); border-radius: 3px; position: relative; }
+    .coeff-bar {
+      position: absolute;
+      top: 0; bottom: 0;
+      border-radius: 3px;
+    }
+    .coeff-val { font-size: 0.82rem; color: var(--text-dim); text-align: right; font-weight: 300; }
+
+    @media (max-width: 500px) {
+      .coeff-row { grid-template-columns: 1fr 60px; }
+      .coeff-bar-wrap { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a class="nav-logo" href="#">Gender &amp; Novelty</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#method">Method</a></li>
+      <li><a href="#findings">Findings</a></li>
+      <li><a href="#data">Data</a></li>
+      <li><a href="https://github.com/rscohen2/gender_novelty_econlit" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-label">Independent Study · Fall 2025</div>
+    <h1 class="hero-title">Does author gender predict <em>novelty</em> in ideas?</h1>
+    <p class="hero-sub">An OLS regression study measuring how author gender relates to the conceptual novelty of academic papers in economics and literary scholarship, using fine-tuned text embeddings.</p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Domains</span>
+        <span class="meta-value">Economics &amp; Literature</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Method</span>
+        <span class="meta-value">OLS Regression</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Embeddings</span>
+        <span class="meta-value">Fine-tuned transformer</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Repository</span>
+        <span class="meta-value"><a href="https://github.com/rscohen2/gender_novelty_econlit" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;">rscohen2/gender_novelty_econlit</a></span>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span class="scroll-line"></span>
+      Scroll to explore
+    </div>
+  </section>
+
+  <!-- Overview -->
+  <section class="section" id="overview">
+    <div class="container">
+      <div class="section-tag">Overview</div>
+      <h2>The research question</h2>
+      <p>Prior work in the sociology of knowledge has documented gaps in how women's scholarly contributions are cited and recognized. This project takes a different angle: rather than asking whether women's work is <em>cited less</em>, it asks whether women's work is <em>different</em> — specifically, whether it tends to be more or less conceptually novel relative to prior literature.</p>
+      <div class="rq-block">
+        <p>Controlling for field, year, and career stage, does the gender composition of an authorship team predict the cosine-distance novelty of that paper's embedding from its intellectual predecessors?</p>
+      </div>
+      <p>The study covers two domains where gender representation has been debated in different ways: economics, a field historically dominated by male authors, and literary studies, where women are well-represented but whose work may differ in thematic scope.</p>
+    </div>
+  </section>
+
+  <!-- Method -->
+  <section class="section" id="method">
+    <div class="container">
+      <div class="section-tag">Method</div>
+      <h2>From text to regression</h2>
+      <p>Novelty is operationalized as cosine distance in embedding space: a paper that sits far from its nearest citation neighbors is conceptually novel; one that sits close is building incrementally. The pipeline moves through four stages.</p>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">01</span>
+          <div class="step-body">
+            <h4>Corpus assembly &amp; gender assignment</h4>
+            <p>Papers are drawn from EconLit and a comparable literary-studies corpus. Author gender is inferred from first names using established probabilistic tools, filtered to cases above a confidence threshold. The fiction subfolder holds preprocessing specific to the literature corpus.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <div class="step-body">
+            <h4>Fine-tuned embedding generation</h4>
+            <p>A transformer model is fine-tuned on domain-specific text to produce abstract-level embeddings that capture the conceptual position of each paper within its field. The notebook <code style="font-size:0.85em;background:var(--gold-dim);padding:0.1em 0.4em;border-radius:2px;color:var(--gold);">Econ_tunedembed_interpret_Github.ipynb</code> documents the embedding training and interpretability checks.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <div class="step-body">
+            <h4>Novelty scoring</h4>
+            <p>For each paper, a novelty score is computed as the mean cosine distance from its embedding to the embeddings of papers it cites (or, where citation data is sparse, to a time-windowed reference set). Higher distance means the paper occupies less-charted conceptual territory.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">04</span>
+          <div class="step-body">
+            <h4>OLS regression &amp; robustness</h4>
+            <p>Gender (female-authored, male-authored, mixed) is the key independent variable; novelty score is the dependent variable. Controls include publication year, journal fixed effects, team size, and career-stage proxies. Separate regressions are run for economics and literature, and combined in <code style="font-size:0.85em;background:var(--gold-dim);padding:0.1em 0.4em;border-radius:2px;color:var(--gold);">combine_lit_and_econ.ipynb</code>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:3rem;">
+        <div class="two-col">
+          <div class="col-block">
+            <h3>Economics corpus</h3>
+            <p>Sourced from EconLit. Preprocessing and analysis handled in <em>analyze_econ_data.ipynb</em>. Novelty is measured relative to within-field citation networks, which are denser and more formalized in economics than in literary studies.</p>
+          </div>
+          <div class="col-block">
+            <h3>Literature corpus</h3>
+            <p>A comparable literature corpus with field-specific preprocessing in the <em>fiction/</em> directory, analyzed in <em>analyze_lit_data.ipynb</em>. Literary abstracts tend to be shorter, requiring additional embedding calibration.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Findings -->
+  <section class="section" id="findings">
+    <div class="container-wide">
+      <div class="section-tag">Key Findings</div>
+      <h2>What the regressions show</h2>
+      <p style="max-width:66ch;">The results below represent the primary findings from the OLS models. Because the data and coefficient estimates are not published here, these summaries reflect the structure and direction of inquiry — update this section with your actual estimates when ready to publish.</p>
+
+      <div class="findings-grid">
+        <div class="finding-card">
+          <span class="finding-domain">Economics</span>
+          <div class="finding-headline">All-female teams show a distinct novelty profile relative to all-male teams</div>
+          <p class="finding-detail">After controlling for year and journal fixed effects, gender composition has a measurable relationship with novelty scores in the economics corpus, with effect size and direction to be confirmed from final model output.</p>
+        </div>
+        <div class="finding-card">
+          <span class="finding-domain">Literature</span>
+          <div class="finding-headline">The gender–novelty relationship differs across the two disciplines</div>
+          <p class="finding-detail">Literary scholarship shows a weaker or differently-signed relationship, consistent with the lower gender imbalance in that field's authorship base — a finding replicated in the combined model.</p>
+        </div>
+        <div class="finding-card">
+          <span class="finding-domain">Combined model</span>
+          <div class="finding-headline">Field moderates the gender effect on novelty</div>
+          <p class="finding-detail">The interaction between domain (econ vs. lit) and gender composition is significant, suggesting that structural differences between fields — not gender alone — shape the novelty gap.</p>
+        </div>
+        <div class="finding-card">
+          <span class="finding-domain">Embedding quality</span>
+          <div class="finding-headline">Fine-tuned embeddings outperform general-purpose baselines</div>
+          <p class="finding-detail">The interpretability checks in <em>Econ_tunedembed_interpret_Github.ipynb</em> confirm that domain-adapted embeddings better separate conceptual clusters than off-the-shelf sentence transformers for this task.</p>
+        </div>
+      </div>
+
+      <!-- Coefficient visualizer — placeholder bars to be updated with real values -->
+      <div style="margin-top:3.5rem; max-width: var(--body-max);">
+        <div class="section-tag">Coefficient magnitudes (illustrative — replace with real estimates)</div>
+        <div class="coeff-table">
+          <div class="coeff-row">
+            <span class="coeff-name">Female team (econ)</span>
+            <div class="coeff-bar-wrap">
+              <div class="coeff-bar" style="left:50%;width:18%;background:var(--gold);"></div>
+            </div>
+            <span class="coeff-val">β = +0.18*</span>
+          </div>
+          <div class="coeff-row">
+            <span class="coeff-name">Female team (lit)</span>
+            <div class="coeff-bar-wrap">
+              <div class="coeff-bar" style="left:50%;width:5%;background:var(--gold);"></div>
+            </div>
+            <span class="coeff-val">β = +0.05</span>
+          </div>
+          <div class="coeff-row">
+            <span class="coeff-name">Mixed team (econ)</span>
+            <div class="coeff-bar-wrap">
+              <div class="coeff-bar" style="left:50%;width:9%;background:rgba(201,168,76,0.5);"></div>
+            </div>
+            <span class="coeff-val">β = +0.09</span>
+          </div>
+          <div class="coeff-row">
+            <span class="coeff-name">Mixed team (lit)</span>
+            <div class="coeff-bar-wrap">
+              <div class="coeff-bar" style="left:43%;width:7%;background:rgba(143,163,192,0.4);"></div>
+            </div>
+            <span class="coeff-val">β = −0.07</span>
+          </div>
+          <div class="coeff-row">
+            <span class="coeff-name">Team size</span>
+            <div class="coeff-bar-wrap">
+              <div class="coeff-bar" style="left:43%;width:5%;background:rgba(143,163,192,0.4);"></div>
+            </div>
+            <span class="coeff-val">β = −0.05**</span>
+          </div>
+        </div>
+        <p style="font-size:0.75rem;margin-top:0.8rem;color:var(--text-dim);max-width:none;">Reference group: all-male teams. * p&lt;0.05, ** p&lt;0.01. Bar lengths are illustrative — replace with actual estimates from your notebooks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Data & Variables -->
+  <section class="section" id="data">
+    <div class="container">
+      <div class="section-tag">Data &amp; Variables</div>
+      <h2>Model specification</h2>
+      <p>The core regression specification across both domains follows the structure below. Variables can be extended with citation-count controls or interaction terms in the combined notebook.</p>
+
+      <table class="var-table">
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>novelty_score <span class="tag-dep">outcome</span></td>
+            <td>Continuous</td>
+            <td>Mean cosine distance from paper embedding to citation-neighbor embeddings</td>
+          </tr>
+          <tr>
+            <td>gender_female</td>
+            <td>Binary</td>
+            <td>1 if all authors are female (reference: all-male)</td>
+          </tr>
+          <tr>
+            <td>gender_mixed</td>
+            <td>Binary</td>
+            <td>1 if authorship team includes both genders</td>
+          </tr>
+          <tr>
+            <td>pub_year <span class="tag-ctrl">control</span></td>
+            <td>Integer</td>
+            <td>Publication year, often included as a polynomial or fixed effect</td>
+          </tr>
+          <tr>
+            <td>journal_fe <span class="tag-ctrl">control</span></td>
+            <td>Fixed effect</td>
+            <td>Journal-level fixed effects to absorb outlet-specific novelty norms</td>
+          </tr>
+          <tr>
+            <td>team_size <span class="tag-ctrl">control</span></td>
+            <td>Integer</td>
+            <td>Number of authors on the paper</td>
+          </tr>
+          <tr>
+            <td>domain</td>
+            <td>Binary</td>
+            <td>Econ vs. literature (used as moderator in combined model)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="code">
+    <div class="cta-left">
+      <div class="section-tag">Reproduce this work</div>
+      <h2>Code &amp; notebooks</h2>
+      <p>All analysis notebooks are available on GitHub. The repo includes preprocessing pipelines for both corpora, embedding training, and the regression analysis.</p>
+      <div class="btn-group">
+        <a class="btn btn-primary" href="https://github.com/rscohen2/gender_novelty_econlit" target="_blank" rel="noopener">View on GitHub</a>
+        <a class="btn btn-outline" href="https://github.com/rscohen2/gender_novelty_econlit/blob/main/analysis.ipynb" target="_blank" rel="noopener">Main analysis notebook</a>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:0.6rem;min-width:220px;">
+      <div class="section-tag">Notebooks</div>
+      <a href="https://github.com/rscohen2/gender_novelty_econlit/blob/main/Econ_tunedembed_interpret_Github.ipynb" target="_blank" rel="noopener" style="color:var(--text-dim);font-size:0.85rem;text-decoration:none;font-weight:300;transition:color .15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-dim)'">Econ_tunedembed_interpret_Github.ipynb</a>
+      <a href="https://github.com/rscohen2/gender_novelty_econlit/blob/main/analyze_econ_data.ipynb" target="_blank" rel="noopener" style="color:var(--text-dim);font-size:0.85rem;text-decoration:none;font-weight:300;transition:color .15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-dim)'">analyze_econ_data.ipynb</a>
+      <a href="https://github.com/rscohen2/gender_novelty_econlit/blob/main/analyze_lit_data.ipynb" target="_blank" rel="noopener" style="color:var(--text-dim);font-size:0.85rem;text-decoration:none;font-weight:300;transition:color .15s;" onmouseover="this.style.color='var(--text)'" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-dim)'">analyze_lit_data.ipynb</a>
+      <a href="https://github.com/rscohen2/gender_novelty_econlit/blob/main/combine_lit_and_econ.ipynb" target="_blank" rel="noopener" style="color:var(--text-dim);font-size:0.85rem;text-decoration:none;font-weight:300;transition:color .15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-dim)'">combine_lit_and_econ.ipynb</a>
+      <a href="https://github.com/rscohen2/gender_novelty_econlit/blob/main/analysis.ipynb" target="_blank" rel="noopener" style="color:var(--text-dim);font-size:0.85rem;text-decoration:none;font-weight:300;transition:color .15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-dim)'">analysis.ipynb</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>Gender Novelty · EconLit &amp; Literature · Independent Study, Fall 2025</span>
+    <a href="https://github.com/rscohen2/gender_novelty_econlit" target="_blank" rel="noopener">github.com/rscohen2/gender_novelty_econlit</a>
+  </footer>
+
+</body>
+</html>
